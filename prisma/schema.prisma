@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      =  "postgresql://postgres:Gfifregk11@localhost:5432/mydb?schema=public"
 }
 model User {
   id   Int    @id @default(autoincrement())
@@ -18,24 +18,12 @@ model User {
 }
 
 model Pokemon {
-  id            Int      @id @default(autoincrement())
-  name          String
-  abilities     String[]
-  types         String[]
-  sprite        String
-  shinySprite   String
-  locations     String[]
-  learnset      String[]
-  stats         Json
-  weight        Int
-  height        Int
+  id             Int      @id @default(autoincrement())
+  name           String
+  weight         Int
+  height         Int
   baseExperience Int
-  forms         String[]
-  heldItems     String[]
-  generation    String
-  color         String
-  species       String
-  experience    Int
-  moves         String[]
-  characteristics Json
+  species        String
+  experience     Int
 }
+
