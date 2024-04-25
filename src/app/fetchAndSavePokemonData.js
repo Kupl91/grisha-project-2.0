@@ -15,29 +15,29 @@ async function fetchPokemonData() {
       if (pokemonData) {
         console.log(pokemonData.abilities); // Выводим имя покемона в консоль
 
-        // await prisma.pokemon.create({
-        //   data: {
-        //     name: pokemonData.name,
-        //     abilities: pokemonData.abilities.map(ability => ability.ability.name),
-        //     types: pokemonData.types.map(type => type.type.name),
-        //     sprite: pokemonData.sprites.front_default,
-        //     shinySprite: pokemonData.sprites.front_shiny,
-        //     locations: pokemonData.location_area_encounters,
-        //     learnset: pokemonData.moves.map(move => move.move.name),
-        //     stats: pokemonData.stats,
-        //     weight: pokemonData.weight,
-        //     height: pokemonData.height,
-        //     baseExperience: pokemonData.base_experience,
-        //     forms: pokemonData.forms.map(form => form.name),
-        //     heldItems: pokemonData.held_items.map(item => item.item.name),
-        //     generation: pokemonData.species.url,
-        //     color: pokemonData.color.name,
-        //     species: pokemonData.species.name,
-        //     experience: pokemonData.base_experience,
-        //     moves: pokemonData.moves.map(move => move.move.name),
-        //     characteristics: pokemonData.abilities.map(ability => ability.ability.name),
-        //   },
-        // });
+         await prisma.pokemon.create({
+          data: {
+            name: pokemonData.name,
+            abilities: pokemonData.abilities.map(ability => ability.ability.name),
+            types: pokemonData.types.map(type => type.type.name),
+            sprite: pokemonData.sprites.front_default,
+            shinySprite: pokemonData.sprites.front_shiny,
+            locations: pokemonData.location_area_encounters,
+            learnset: pokemonData.moves.map(move => move.move.name),
+            stats: pokemonData.stats,
+            weight: pokemonData.weight,
+            height: pokemonData.height,
+            baseExperience: pokemonData.base_experience,
+            forms: pokemonData.forms.map(form => form.name),
+            heldItems: pokemonData.held_items.map(item => item.item.name),
+            generation: pokemonData.species.url,
+            color: pokemonData.color.name,
+            species: pokemonData.species.name,
+            experience: pokemonData.base_experience,
+            moves: pokemonData.moves.map(move => move.move.name),
+            characteristics: pokemonData.abilities.map(ability => ability.ability.name),
+          },
+         });
       }
     }
   } catch (error) {
