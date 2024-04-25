@@ -1,6 +1,6 @@
 {
   "prisma": {
-    "schema": "C:/Users/pavel.kuplensky/js/grisha-project/prisma/schema.prisma" // меняй это для компа!
+    "schema": "C:/Users/pavel.kuplensky/js/grisha-project/prisma/schema.prisma" 
   },
   "type": "module",
   "name": "first-try",
