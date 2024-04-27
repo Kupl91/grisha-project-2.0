@@ -17,13 +17,23 @@ model User {
   name String
 }
 
-model Pokemon {
-  id             Int      @id @default(autoincrement())
-  name           String
-  weight         Int
-  height         Int
-  baseExperience Int
-  species        String
-  experience     Int
-}
-
+ model Pokemon {
+      id             Int       @id @default(autoincrement())
+      name           String  
+      weight         Int  
+      height         Int  
+      baseExperience Int  
+      species        String 
+      experience  Int   
+                
+       // Массив ability через связующую таблицу    
+       abilities Ability[]       
+    }    
+    
+    model Ability {     
+        id       Int @id @default(autoincrement())     
+        name    String    
+                      
+                                      // Связь много ко многим   
+  pokemons Pokemon[]   
+ }       
