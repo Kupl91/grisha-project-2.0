@@ -12,13 +12,19 @@ async function getPokemonWithAbilities() {
     include: {
       abilities: {
         include: {
-          ability: true
+          ability: {
+            select: { name: true }
+          }
         }
       }
     }
   });
 
-  console.log(pokemonsWithAbilities);
+  // Вывод информации о каждом покемоне и его способностях
+  pokemonsWithAbilities.forEach(pokemon => {
+    console.log(`Покемон ${pokemon.name} имеет следующие способности:`);
+    pokemon.abilities.forEach(pa => console.log(`${pa.ability.name}`));
+  });
 }
 
 fetchPokemonData().then(getPokemonWithAbilities);
