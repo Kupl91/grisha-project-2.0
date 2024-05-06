@@ -12,28 +12,35 @@ datasource db {
   provider = "postgresql"
   url      =  "postgresql://postgres:Gfifregk11@localhost:5432/mydb?schema=public"
 }
+
 model User {
   id   Int    @id @default(autoincrement())
   name String
 }
 
- model Pokemon {
-      id             Int       @id @default(autoincrement())
-      name           String  
-      weight         Int  
-      height         Int  
-      baseExperience Int  
-      species        String 
-      experience  Int   
-                
-       // Массив ability через связующую таблицу    
-       abilities Ability[]       
-    }    
-    
-    model Ability {     
-        id       Int @id @default(autoincrement())     
-        name    String    
-                      
-                                      // Связь много ко многим   
-  pokemons Pokemon[]   
- }       
+model Pokemon {
+  id             Int             @id @default(autoincrement())
+  name           String          @unique
+  weight         Int  
+  height         Int  
+  baseExperience Int  
+  species        String 
+  experience     Int   
+  abilities      PokemonAbility[]
+}
+
+
+model Ability {
+  id       Int             @id @default(autoincrement())
+  name     String          @unique
+  pokemons PokemonAbility[]
+}
+
+model PokemonAbility {
+  pokemonId Int
+  abilityId Int
+  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
+  ability   Ability @relation(fields: [abilityId], references: [id])
+
+ @@id([pokemonId, abilityId])
+}
