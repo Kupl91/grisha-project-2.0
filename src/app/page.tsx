@@ -1,4 +1,4 @@
-// main
+// C:\Users\pavel.kuplensky\js\grisha-project\src\app\page.tsx
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';

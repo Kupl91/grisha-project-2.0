@@ -1,3 +1,4 @@
+// C:\Users\pavel.kuplensky\js\grisha-project\src\app\[id]\page.tsx
 "use client";
 import React, { useState, useEffect } from "react";
 

@@ -1,3 +1,4 @@
+// C:\Users\pavel.kuplensky\js\grisha-project\src\app\fetchAndSavePokemonData.js
 import { PrismaClient } from '@prisma/client';
 import fetch from 'node-fetch';
 
@@ -5,7 +6,7 @@ const prisma = new PrismaClient();
 
 async function fetchPokemonData() {
   try {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20');
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=25');
     const data = await response.json();
     const pokemons = data.results;
 
