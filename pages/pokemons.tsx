@@ -1,4 +1,3 @@
-//C:\Users\pavel.kuplensky\js\grisha-project\pages\pokemons.tsx
 import React, { useEffect, useState } from 'react';
 
 interface Pokemon {
@@ -42,7 +41,8 @@ const PokemonsPage = () => {
           id: pokemonData.id,
           abilities: pokemonData.abilities.map(a => a.ability.name).join(', '),
           experience: pokemonData.experience,
-          height: pokemonData.height
+          height: pokemonData.height,
+          weight: pokemonData.weight // Добавлено
         });
       } else {
          throw new Error('Не удалось получить информацию о покемоне');
@@ -107,7 +107,7 @@ const PokemonsPage = () => {
             <h2 style={{ marginRight: '10px' }}>{pokemon.name}</h2>
             <button onClick={() => handleDetailsClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Детали</button>
             {selectedDetail && selectedDetail.id === pokemon.id && 
-              (<div>{`ID: ${selectedDetail.id}, Способности: ${selectedDetail.abilities}, Опыт: ${selectedDetail.experience}, Высота: ${selectedDetail.height}`}</div>)
+              (<div>{`ID: ${selectedDetail.id}, Способности: ${selectedDetail.abilities}, Опыт: ${selectedDetail.experience}, Высота: ${selectedDetail.height}, Вес: ${selectedDetail.weight}`}</div>)
             }
           </div>
         ))}
