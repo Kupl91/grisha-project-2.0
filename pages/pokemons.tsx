@@ -41,7 +41,7 @@ const PokemonsPage = () => {
         setSelectedDetail({
           id: pokemonData.id,
           abilities: pokemonData.abilities.map(a => a.ability.name).join(', '),
-          experience: pokemonData.base_experience,
+          experience: pokemonData.experience,
           height: pokemonData.height
         });
       } else {
