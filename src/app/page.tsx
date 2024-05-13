@@ -2,6 +2,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Button } from "@/components/ui/button"; 
 
 const DetailPage = ({ pokeName }) => {
   return <div>{pokeName}</div>;
@@ -136,7 +137,7 @@ const sortPokemons = () => {
         .map(({ id, name, url }) => (
           <div key={id} style={{ marginBottom:'10px' }}>
             <span>{name}</span>
-            <button onClick={() => handleDetailsClick(url)} style={{ marginLeft: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Детали</button>
+            <Button onClick={() => handleDetailsClick(url)} style={{ marginLeft: '10px' }}>Детали</Button> 
             
             <Link href={`/${name}`} legacyBehavior>
               <a target="_blank" style={{ marginLeft: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Подробно</a>
@@ -147,8 +148,8 @@ const sortPokemons = () => {
              }
           </div>
         ))}
-        <button onClick={previousPage}>Предыдущая</button>
-      <button onClick={nextPage}>Следующая</button>
+        <Button onClick={previousPage}>Предыдущая</Button> 
+      <Button onClick={nextPage}>Следующая</Button>
       <PageCounter currentPage={currentPage} totalPages={totalPages} />
     </div>
   );
