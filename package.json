@@ -14,17 +14,26 @@
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-slot": "^1.0.2",
     "axios": "^1.6.8",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "javascript": "^1.0.0",
-    "next": "^14.2.2",
+    "lucide-react": "^0.378.0",
+    "next": "^14.2.3",
     "node": "^18.20.2",
     "node-fetch": "^3.3.2",
     "pg": "^8.11.5",
     "react": "^18.2.0",
     "react-dom": "^18",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "shadcn-ui": "^0.8.0",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "ui": "github:shadcn/ui"
   },
   "devDependencies": {
     "@types/node": "20.12.7",
@@ -33,6 +42,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
     "prisma": "^5.13.0",
+    "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"
   }
 }
