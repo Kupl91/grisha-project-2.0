@@ -63,6 +63,7 @@ const PokemonsPage = () => {
       const response = await fetch(`/api/pokemon/${id}`, {
         method: 'DELETE',
       });
+      console.log(response);
       if (response.ok) {
         setPokemons(pokemons.filter((pokemon) => pokemon.id !== id));
       } else {
@@ -96,7 +97,7 @@ const PokemonsPage = () => {
   const handleFilterValueChange = (event) => {
     setFilterValue(event.target.value.toLowerCase());
   };
-
+  console.log(pokemons.length);
   const sortedAndFilteredPokemons = pokemons
     .filter((pokemon) => pokemon[filterType].toString().toLowerCase().includes(filterValue))
     .sort((a, b) => {
@@ -107,6 +108,15 @@ const PokemonsPage = () => {
       }
     });
 
+    /*addPokemon( ) {
+      const response = await fetch(`/api/pokemon/${id}`, {
+        method: 'POST',
+        {
+          Weight: 38,
+          
+        }
+      });
+    }*/
   return (
     <div style={{ backgroundColor: 'black', color: 'white' }}>
       <input type="text" onChange={handleFilterValueChange} placeholder="Фильтр..." />
@@ -136,6 +146,19 @@ const PokemonsPage = () => {
       <button onClick={nextPage} style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Следующая</button>
       <div>Страница {currentPage} из {totalPages}</div>
     </div>
+
+    /*<div>
+      TODO 
+        button -> add
+        <form>
+          <input> weight</input>
+          <input> exp</input>
+          <input> height</input>
+          <input> baxeExp</input>
+          <submit onClick = addPokemon()></submit>
+        </form> 
+    </div>*/
+
   );
 };
 
