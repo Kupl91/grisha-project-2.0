@@ -1,3 +1,4 @@
+// C:\Users\pavel.kuplensky\js\grisha-project\pages\pokemons.tsx
 import React, { useEffect, useState } from 'react';
 
 interface Pokemon {
@@ -31,28 +32,47 @@ const PokemonsPage = () => {
   }, []);
 
   const handleDetailsClick = async (id) => {
-    setSelectedDetail(null);
-    try {
-      const response = await fetch(`/api/pokemon/${id}`);
-      if(response.ok){
-        const pokemonData = await response.json();
+    if (selectedDetail && selectedDetail.id === id) {
+      setSelectedDetail(null);
+    } else {
+      setSelectedDetail(null);
+      try {
+        const response = await fetch(`/api/pokemon/${id}`);
+        if(response.ok){
+          const pokemonData = await response.json();
+          
+          setSelectedDetail({
+            id: pokemonData.id,
+            abilities: pokemonData.abilities.map(a => a.ability.name).join(', '),
+            experience: pokemonData.experience,
+            height: pokemonData.height,
+            weight: pokemonData.weight 
+          });
+        } else {
+           throw new Error('Не удалось получить информацию о покемоне');
+         }
         
-        setSelectedDetail({
-          id: pokemonData.id,
-          abilities: pokemonData.abilities.map(a => a.ability.name).join(', '),
-          experience: pokemonData.experience,
-          height: pokemonData.height,
-          weight: pokemonData.weight // Добавлено
-        });
-      } else {
-         throw new Error('Не удалось получить информацию о покемоне');
+      } catch (error) {
+         console.error("Ошибка при загрузке данных:", error);
        }
-      
-    } catch (error) {
-       console.error("Ошибка при загрузке данных:", error);
      }
-   };
+  };
 
+  const handleDeleteClick = async (id: number) => {
+    try {
+      const response = await fetch(`/api/pokemon/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setPokemons(pokemons.filter((pokemon) => pokemon.id !== id));
+      } else {
+        throw new Error('Не удалось удалить покемона');
+      }
+    } catch (error) {
+      console.error("Ошибка при удалении покемона:", error);
+    }
+  };
+  
   const nextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -104,6 +124,7 @@ const PokemonsPage = () => {
         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
         .map((pokemon) => (
           <div key={pokemon.id} style={{ marginBottom:'10px', display: 'flex', alignItems: 'center' }}>
+            <button onClick={() => handleDeleteClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Удалить</button>
             <h2 style={{ marginRight: '10px' }}>{pokemon.name}</h2>
             <button onClick={() => handleDetailsClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Детали</button>
             {selectedDetail && selectedDetail.id === pokemon.id && 
