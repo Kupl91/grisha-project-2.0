@@ -28,6 +28,7 @@ model Pokemon {
   baseExperience Int  
   species        String 
   experience     Int   
+  creationTime   DateTime        @default(now())
   abilities      PokemonAbility[]
 }
 
