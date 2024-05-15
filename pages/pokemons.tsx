@@ -20,6 +20,14 @@ const PokemonsPage = () => {
   const [sortType, setSortType] = useState('id');
   const [filterType, setFilterType] = useState('name');
   const [filterValue, setFilterValue] = useState('');
+  const [showForm, setShowForm] = useState(false);
+  const [newPokemon, setNewPokemon] = useState({
+    name: '',
+    weight: 0,
+    height: 0,
+    species: '',
+    experience: 0,
+  });
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -108,15 +116,53 @@ const PokemonsPage = () => {
       }
     });
 
-    /*addPokemon( ) {
-      const response = await fetch(`/api/pokemon/${id}`, {
-        method: 'POST',
-        {
-          Weight: 38,
-          
+    const handleCreateClick = () => {
+      setShowForm(true);
+    };
+
+    const handleSubmitClick = async () => {
+      try {
+        console.log(newPokemon);
+        const response = await fetch('/api/pokemon/create', { // Замените '/api/pokemon' на '/api/pokemons'
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: newPokemon.id,
+            name: newPokemon.name,
+            weight: newPokemon.weight,
+            height: newPokemon.height,
+            species: newPokemon.species,
+            experience: newPokemon.experience,
+          }),
+        });
+    
+        if (response.ok) {
+          const pokemon = await response.json();
+          setPokemons([...pokemons, pokemon]);
+          setShowForm(false);
+        } else {
+          throw new Error('Не удалось создать покемона');
         }
+      } catch (error) {
+        console.error("Ошибка при создании покемона:", error);
+      }
+    };
+    
+
+    const handleInputChange = (event) => {
+      if (event.target.name === 'id' && Number(event.target.value) < 26) {
+        alert('ID не может быть меньше 26');
+        return;
+      }
+      setNewPokemon({
+        ...newPokemon,
+        [event.target.name]: event.target.value,
       });
-    }*/
+    };
+    
+
   return (
     <div style={{ backgroundColor: 'black', color: 'white' }}>
       <input type="text" onChange={handleFilterValueChange} placeholder="Фильтр..." />
@@ -142,23 +188,22 @@ const PokemonsPage = () => {
             }
           </div>
         ))}
-      <button onClick={previousPage} style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Предыдущая</button>
+       <button onClick={previousPage} style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Предыдущая</button>
       <button onClick={nextPage} style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Следующая</button>
+      <button onClick={handleCreateClick} style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Создай</button>
+      {showForm && (
+        <div>
+          <input type="number" name="id" onChange={handleInputChange} placeholder="Id" />
+          <input type="text" name="name" onChange={handleInputChange} placeholder="Имя" />
+          <input type="number" name="weight" onChange={handleInputChange} placeholder="Вес" />
+          <input type="number" name="height" onChange={handleInputChange} placeholder="Высота" />
+          <input type="text" name="species" onChange={handleInputChange} placeholder="Вид" />
+          <input type="number" name="experience" onChange={handleInputChange} placeholder="Опыт" />
+          <button onClick={handleSubmitClick}>Отправить</button>
+        </div>
+      )}
       <div>Страница {currentPage} из {totalPages}</div>
     </div>
-
-    /*<div>
-      TODO 
-        button -> add
-        <form>
-          <input> weight</input>
-          <input> exp</input>
-          <input> height</input>
-          <input> baxeExp</input>
-          <submit onClick = addPokemon()></submit>
-        </form> 
-    </div>*/
-
   );
 };
 
