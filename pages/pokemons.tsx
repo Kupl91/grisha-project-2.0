@@ -31,12 +31,26 @@ const PokemonsPage = () => {
   const itemsPerPage = 5;
 
   useEffect(() => {
-    fetch('/api/pokemons')
-      .then(response => response.json())
-      .then(data => {
+    const fetchPokemons = async () => {
+      try {
+        const response = await fetch('/api/pokemons');
+        
+        // Проверяем статус ответа
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        // Предполагаем, что ответ будет в формате JSON
+        const data = await response.json();
+        
         setPokemons(data);
         setTotalPages(Math.ceil(data.length / itemsPerPage));
-      });
+      } catch (error) {
+         console.error("Ошибка при загрузке покемонов:", error.message); 
+      }
+    };
+  
+    fetchPokemons();
   }, []);
 
   const handleDetailsClick = async (id) => {
@@ -123,32 +137,33 @@ const PokemonsPage = () => {
     const handleSubmitClick = async () => {
       try {
         console.log(newPokemon);
-        const response = await fetch('/api/pokemon/create', { // Замените '/api/pokemon' на '/api/pokemons'
+        const response = await fetch('/api/pokemon/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            id: newPokemon.id,
             name: newPokemon.name,
             weight: newPokemon.weight,
             height: newPokemon.height,
             species: newPokemon.species,
-            experience: newPokemon.experience,
-          }),
-        });
+           experience:newPokemon.experience, 
+           //abilities:newPokemon.abilities.map(a=>a) // Assuming abilities as array of strings
+         }),
+       });
     
-        if (response.ok) {
-          const pokemon = await response.json();
-          setPokemons([...pokemons, pokemon]);
-          setShowForm(false);
+       if (response.ok) {
+         const pokemon = await response.json();
+         setPokemons([...pokemons, pokemon]);
+         setShowForm(false);
         } else {
           throw new Error('Не удалось создать покемона');
         }
       } catch (error) {
-        console.error("Ошибка при создании покемона:", error);
+        console.error("Ошибка при создании покемона:", error.message);
       }
     };
+    
     
 
     const handleInputChange = (event) => {
@@ -192,16 +207,15 @@ const PokemonsPage = () => {
       <button onClick={nextPage} style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Следующая</button>
       <button onClick={handleCreateClick} style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Создай</button>
       {showForm && (
-        <div>
-          <input type="number" name="id" onChange={handleInputChange} placeholder="Id" />
-          <input type="text" name="name" onChange={handleInputChange} placeholder="Имя" />
-          <input type="number" name="weight" onChange={handleInputChange} placeholder="Вес" />
-          <input type="number" name="height" onChange={handleInputChange} placeholder="Высота" />
-          <input type="text" name="species" onChange={handleInputChange} placeholder="Вид" />
-          <input type="number" name="experience" onChange={handleInputChange} placeholder="Опыт" />
-          <button onClick={handleSubmitClick}>Отправить</button>
-        </div>
-      )}
+  <div>
+    <input type="text" name="name" onChange={handleInputChange} placeholder="Имя" />
+    <input type="number" name="weight" onChange={handleInputChange} placeholder="Вес" />
+    <input type="number" name="height" onChange={handleInputChange} placeholder="Высота" />
+    <input type="text" name="species" onChange={handleInputChange} placeholder="Вид" />
+    <input type="number" name="experience" onChange={handleInputChange} placeholder="Опыт" />
+    <button onClick={handleSubmitClick}>Отправить</button>
+  </div>
+)}
       <div>Страница {currentPage} из {totalPages}</div>
     </div>
   );
