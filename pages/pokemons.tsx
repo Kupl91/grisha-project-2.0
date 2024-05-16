@@ -58,31 +58,28 @@ const PokemonsPage = () => {
       setSelectedDetail(null);
     } else {
       setSelectedDetail(null);
-      try {
-        const response = await fetch(`/api/pokemon/${id}`);
-        if(response.ok){
-          const pokemonData = await response.json();
-          
-          setSelectedDetail({
-            id: pokemonData.id,
-            abilities: pokemonData.abilities.map(a => a.ability.name).join(', '),
-            experience: pokemonData.experience,
-            height: pokemonData.height,
-            weight: pokemonData.weight 
-          });
-        } else {
-           throw new Error('Не удалось получить информацию о покемоне');
-         }
-        
-      } catch (error) {
-         console.error("Ошибка при загрузке данных:", error);
-       }
-     }
+      try{
+     const response=await fetch(`/api/pokemon/${id}`);
+  if(response.ok){
+  const pokemonData=await response.json();
+  setSelectedDetail({
+            id:pokemonData.id,
+           abilities:pokemonData.abilities.map((a)=>a.name??a.ability?.name ?? '').join(', '), 
+  experience:pokemonData.experience,
+  height:pokemonData.height,
+  weight:pokemonData.weight});
+  } else{
+  throw newError ('Не удалось получить информацию о покемоне');
+  }
+  }
+       catch(error){
+  console.error("Ошибка при загрузке данных:",error);   
+  }}
   };
 
   const handleDeleteClick = async (id: number) => {
     try {
-      const response = await fetch(`/api/pokemon/${id}`, {
+      const response = await fetch(`/api/pokemon/delete?id=${id}`, {
         method: 'DELETE',
       });
       console.log(response);
