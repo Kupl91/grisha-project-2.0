@@ -162,7 +162,26 @@ const PokemonsPage = () => {
       }
     };
     
-    
+    const handleUpdateClick = async (id) => {
+      try {
+        const response = await fetch(`/api/pokemon/update`, {
+          method: 'PUT', // Метод PUT используется для обновления ресурсов
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          // Здесь должен быть запрос с данными для обновления покемона
+        });
+        if (response.ok) {
+          const updatedPokemon = await response.json();
+          // Обновите данные в state selectedDetail
+          setSelectedDetail(updatedPokemon);
+        } else {
+          throw new Error('Не удалось обновить покемона');
+        }
+      } catch (error) {
+        console.error("Ошибка при обновлении покемона:", error);
+      }
+    };
 
     const handleInputChange = (event) => {
       if (event.target.name === 'id' && Number(event.target.value) < 26) {
@@ -199,6 +218,7 @@ const PokemonsPage = () => {
             {selectedDetail && selectedDetail.id === pokemon.id && 
               (<div>{`ID: ${selectedDetail.id}, Способности: ${selectedDetail.abilities}, Опыт: ${selectedDetail.experience}, Высота: ${selectedDetail.height}, Вес: ${selectedDetail.weight}`}</div>)
             }
+            <button onClick={() => handleUpdateClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Обновить</button>
           </div>
         ))}
        <button onClick={previousPage} style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Предыдущая</button>
