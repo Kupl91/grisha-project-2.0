@@ -14,7 +14,6 @@ export default async function handler(
       name: true,
       weight: true,
       height: true,
-      baseExperience: true,
       species: true,
       experience: true,
       abilities: {
