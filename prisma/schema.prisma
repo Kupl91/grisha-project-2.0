@@ -1,4 +1,4 @@
-//C:\Users\pavel.kuplensky\js\grisha-project\prisma\schema.prisma
+// grisha-project-2.0\prisma\schema.prisma
 
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
@@ -30,7 +30,6 @@ model Pokemon {
   creationTime   DateTime        @default(now())
   abilities      PokemonAbility[]
 }
-
 
 model Ability {
   id       Int             @id @default(autoincrement())

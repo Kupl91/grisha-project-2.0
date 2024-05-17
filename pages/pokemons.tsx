@@ -1,4 +1,4 @@
-// C:\Users\pavel.kuplensky\js\grisha-project\pages\pokemons.tsx
+// grisha-project-2.0\pages\pokemons.tsx
 import React, { useEffect, useState } from 'react';
 
 interface Pokemon {
@@ -58,31 +58,28 @@ const PokemonsPage = () => {
       setSelectedDetail(null);
     } else {
       setSelectedDetail(null);
-      try {
-        const response = await fetch(`/api/pokemon/${id}`);
-        if(response.ok){
-          const pokemonData = await response.json();
-          
-          setSelectedDetail({
-            id: pokemonData.id,
-            abilities: pokemonData.abilities.map(a => a.ability.name).join(', '),
-            experience: pokemonData.experience,
-            height: pokemonData.height,
-            weight: pokemonData.weight 
-          });
-        } else {
-           throw new Error('Не удалось получить информацию о покемоне');
-         }
-        
-      } catch (error) {
-         console.error("Ошибка при загрузке данных:", error);
-       }
-     }
+      try{
+     const response=await fetch(`/api/pokemon/${id}`);
+  if(response.ok){
+  const pokemonData=await response.json();
+  setSelectedDetail({
+            id:pokemonData.id,
+           abilities:pokemonData.abilities.map((a)=>a.name??a.ability?.name ?? '').join(', '), 
+  experience:pokemonData.experience,
+  height:pokemonData.height,
+  weight:pokemonData.weight});
+  } else{
+  throw newError ('Не удалось получить информацию о покемоне');
+  }
+  }
+       catch(error){
+  console.error("Ошибка при загрузке данных:",error);   
+  }}
   };
 
   const handleDeleteClick = async (id: number) => {
     try {
-      const response = await fetch(`/api/pokemon/${id}`, {
+      const response = await fetch(`/api/pokemon/delete?id=${id}`, {
         method: 'DELETE',
       });
       console.log(response);
@@ -118,18 +115,19 @@ const PokemonsPage = () => {
 
   const handleFilterValueChange = (event) => {
     setFilterValue(event.target.value.toLowerCase());
-  };
-  console.log(pokemons.length);
-  const sortedAndFilteredPokemons = pokemons
-    .filter((pokemon) => pokemon[filterType].toString().toLowerCase().includes(filterValue))
-    .sort((a, b) => {
-      if (sortType === 'name') {
-        return a.name.localeCompare(b.name);
-      } else {
-        return a[sortType] - b[sortType];
-      }
-    });
+ };
 
+ // console.log(pokemons.length);
+
+ const sortedAndFilteredPokemons = pokemons
+  .filter((pokemon) => pokemon[filterType]?.toString().toLowerCase().includes(filterValue))
+  .sort((a, b) => {
+    if (sortType === 'name') {
+      return a.name.localeCompare(b.name);
+    } else {
+      return a[sortType] - b[sortType];
+    }
+   });
     const handleCreateClick = () => {
       setShowForm(true);
     };
@@ -164,7 +162,26 @@ const PokemonsPage = () => {
       }
     };
     
-    
+    const handleUpdateClick = async (id) => {
+      try {
+        const response = await fetch(`/api/pokemon/update`, {
+          method: 'PUT', // Метод PUT используется для обновления ресурсов
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          // Здесь должен быть запрос с данными для обновления покемона
+        });
+        if (response.ok) {
+          const updatedPokemon = await response.json();
+          // Обновите данные в state selectedDetail
+          setSelectedDetail(updatedPokemon);
+        } else {
+          throw new Error('Не удалось обновить покемона');
+        }
+      } catch (error) {
+        console.error("Ошибка при обновлении покемона:", error);
+      }
+    };
 
     const handleInputChange = (event) => {
       if (event.target.name === 'id' && Number(event.target.value) < 26) {
@@ -201,6 +218,7 @@ const PokemonsPage = () => {
             {selectedDetail && selectedDetail.id === pokemon.id && 
               (<div>{`ID: ${selectedDetail.id}, Способности: ${selectedDetail.abilities}, Опыт: ${selectedDetail.experience}, Высота: ${selectedDetail.height}, Вес: ${selectedDetail.weight}`}</div>)
             }
+            <button onClick={() => handleUpdateClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Обновить</button>
           </div>
         ))}
        <button onClick={previousPage} style={{ padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Предыдущая</button>

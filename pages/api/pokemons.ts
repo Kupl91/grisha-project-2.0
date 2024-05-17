@@ -1,4 +1,4 @@
-// C:\Users\pavel.kuplensky\js\grisha-project\pages\api\pokemons.ts
+// grisha-project-2.0\pages\api\pokemons.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 
