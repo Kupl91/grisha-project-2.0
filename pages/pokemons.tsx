@@ -1,4 +1,4 @@
-// grisha-project-2.0\pages\pokemons.tsx
+// grisha-project-2.0\pages\pokemonsv1.tsx
 import React, { useEffect, useState } from 'react';
 
 interface Pokemon {
