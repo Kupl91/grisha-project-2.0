@@ -146,8 +146,18 @@ export const usePokemonActions = () => {
   };
 
   const handleCreateClick = () => {
+    console.log('Кнопка "Создать" была нажата');
     setShowForm(true);
   };
+
+  const handleInputChange = (event) => {
+    setNewPokemon({
+      ...newPokemon,
+      [event.target.name]: event.target.value,
+    });
+  };
+  
+  
 
   return {
     pokemons,
@@ -165,6 +175,7 @@ export const usePokemonActions = () => {
     sortedAndFilteredPokemons,
     handleUpdateInputChange,
     showForm, 
-    handleCreateClick, 
+    handleCreateClick,
+    handleInputChange,
   };
 };

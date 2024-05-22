@@ -70,7 +70,9 @@ const PokemonsPage = () => {
        handleInputChange={handleInputChange}
        handleCreateClick={handleCreateClick}
        newPokemon={newPokemon}
-/>
+       showForm={showForm} 
+      />
+
     </div>
   );
 };
