@@ -16,6 +16,7 @@ export const usePokemonActions = () => {
   const [filterType, setFilterType] = useState('name');
   const [filterValue, setFilterValue] = useState('');
   const [showForm, setShowForm] = useState(false);
+  const [updateFormOpen, setUpdateFormOpen] = useState(false);
 
   const handleSortChange = (event) => {
     setSortType(event.target.value);

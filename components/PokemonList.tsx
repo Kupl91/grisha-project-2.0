@@ -25,7 +25,7 @@ interface PokemonListProps {
   itemsPerPage: number;
 }
 
-const PokemonList: React.FC<PokemonListProps> = ({ pokemons, handleDeleteClick, handleDetailsClick, handleUpdateSubmit, handleUpdateInputChange, selectedDetail, updatingPokemon, currentPage, itemsPerPage }) => {
+const PokemonList = ({ pokemons, handleDeleteClick, handleDetailsClick, handleUpdateSubmit, handleUpdateClick, handleUpdateInputChange, selectedDetail, updatingPokemon, currentPage, itemsPerPage }) => {
   return (
     <div>
       {pokemons
