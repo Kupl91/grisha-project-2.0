@@ -17,6 +17,7 @@ const PokemonsPage = () => {
     handleDeleteClick,
     handleSubmitClick,
     handleUpdateSubmit,
+    handleUpdateClick,
     handleSortChange,
     handleFilterTypeChange,
     handleFilterValueChange,
@@ -53,6 +54,8 @@ const PokemonsPage = () => {
         pokemons={sortedAndFilteredPokemons}
         handleDeleteClick={handleDeleteClick}
         handleDetailsClick={handleDetailsClick}
+        handleUpdateSubmit={handleUpdateSubmit}
+        handleUpdateClick={handleUpdateClick}
         handleUpdateInputChange={handleUpdateInputChange}
         selectedDetail={selectedDetail}
         updatingPokemon={updatingPokemon}

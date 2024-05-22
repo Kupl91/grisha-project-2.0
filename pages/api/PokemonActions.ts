@@ -112,6 +112,11 @@ export const usePokemonActions = () => {
   };
 
   const handleUpdateSubmit = async () => {
+    if (!updatingPokemon) {
+      console.error("Нет покемона для обновления");
+      return;
+    }
+  
     try {
       const response = await fetch('/api/pokemon/update', {
         method: 'PUT',
@@ -127,9 +132,11 @@ export const usePokemonActions = () => {
           experience: updatingPokemon.experience,
         }),
       });
+  
       if (response.ok) {
         const updatedPokemon = await response.json();
         setPokemons(pokemons.map((pokemon) => pokemon.id === updatedPokemon.id ? updatedPokemon : pokemon));
+        setUpdatingPokemon(null);
       } else {
         throw new Error('Не удалось обновить покемона');
       }
@@ -157,6 +164,18 @@ export const usePokemonActions = () => {
     });
   };
   
+  const handleUpdateClick = (id: number) => {
+    if (updatingPokemon && updatingPokemon.id === id) {
+      // Если форма обновления уже открыта для этого покемона, закройте ее
+      setUpdatingPokemon(null);
+      setUpdateFormOpen(false); // Закрываем форму обновления
+    } else {
+      // Иначе откройте форму обновления для этого покемона
+      const pokemonToUpdate = pokemons.find((pokemon) => pokemon.id === id);
+      setUpdatingPokemon(pokemonToUpdate ? {...pokemonToUpdate} : null);
+      setUpdateFormOpen(true); // Открываем форму обновления
+    }
+  };
   
 
   return {
@@ -177,5 +196,6 @@ export const usePokemonActions = () => {
     showForm, 
     handleCreateClick,
     handleInputChange,
+    handleUpdateClick,
   };
 };

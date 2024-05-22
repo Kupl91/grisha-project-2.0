@@ -16,7 +16,8 @@ interface PokemonListProps {
   pokemons: Pokemon[];
   handleDeleteClick: (id: number) => void;
   handleDetailsClick: (id: number) => void;
-  handleUpdateClick: (id: number) => void;
+  handleUpdateSubmit: () => void;
+  handleUpdateClick: (id: number) => void; // Добавьте эту строку
   handleUpdateInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   selectedDetail: Pokemon | null;
   updatingPokemon: Pokemon | null;
@@ -24,7 +25,7 @@ interface PokemonListProps {
   itemsPerPage: number;
 }
 
-const PokemonList: React.FC<PokemonListProps> = ({ pokemons, handleDeleteClick, handleDetailsClick, handleUpdateClick, handleUpdateInputChange, selectedDetail, updatingPokemon, currentPage, itemsPerPage }) => {
+const PokemonList: React.FC<PokemonListProps> = ({ pokemons, handleDeleteClick, handleDetailsClick, handleUpdateSubmit, handleUpdateInputChange, selectedDetail, updatingPokemon, currentPage, itemsPerPage }) => {
   return (
     <div>
       {pokemons
