@@ -1,4 +1,4 @@
-// src/components/PokemonForm.tsx
+// C:\Users\pavel.kuplensky\js\grisha-project\components\PokemonForm.tsx
 import React from 'react';
 
 interface PokemonFormProps {

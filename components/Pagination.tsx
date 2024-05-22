@@ -1,4 +1,4 @@
-// src/components/Pagination.tsx
+// C:\Users\pavel.kuplensky\js\grisha-project\components\Pagination.tsx
 import React from 'react';
 
 interface PaginationProps {

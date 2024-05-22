@@ -1,4 +1,4 @@
-// src/components/FilterAndSort.tsx
+// C:\Users\pavel.kuplensky\js\grisha-project\components\FilterAndSort.tsx
 import React from 'react';
 
 interface FilterAndSortProps {

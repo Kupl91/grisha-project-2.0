@@ -1,5 +1,5 @@
 // C:\Users\pavel.kuplensky\js\grisha-project\pages\pokemons.tsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import FilterAndSort from '../components/FilterAndSort';
 import Pagination from '../components/Pagination';
 import PokemonList from '../components/PokemonList';
@@ -17,24 +17,44 @@ const PokemonsPage = () => {
     handleDeleteClick,
     handleSubmitClick,
     handleUpdateSubmit,
+    handleSortChange,
+    sortedAndFilteredPokemons, // Destructure sortedAndFilteredPokemons here
   } = usePokemonActions();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     fetchPokemons();
   }, []);
 
+  const nextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const previousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
   return (
     <div>
-      <FilterAndSort />
+      <FilterAndSort handleSortChange={handleSortChange} />
       <PokemonList
-        pokemons={pokemons}
+        pokemons={sortedAndFilteredPokemons} // Now sortedAndFilteredPokemons is defined
         handleDeleteClick={handleDeleteClick}
         handleDetailsClick={handleDetailsClick}
         handleUpdateClick={handleUpdateSubmit}
         selectedDetail={selectedDetail}
         updatingPokemon={updatingPokemon}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
       />
-      <Pagination />
+      <Pagination 
+        currentPage={currentPage}
+        totalPages={Math.ceil(sortedAndFilteredPokemons.length / itemsPerPage)}
+        nextPage={nextPage}
+        previousPage={previousPage}
+      />
       <PokemonForm
         handleSubmitClick={handleSubmitClick}
         handleInputChange={(event) => setNewPokemon({

@@ -1,4 +1,4 @@
-// src/components/PokemonList.tsx
+// C:\Users\pavel.kuplensky\js\grisha-project\components\PokemonList.tsx
 import React from 'react';
 
 interface Pokemon {
@@ -19,27 +19,31 @@ interface PokemonListProps {
   handleUpdateClick: (id: number) => void;
   selectedDetail: Pokemon | null;
   updatingPokemon: Pokemon | null;
+  currentPage: number;
+  itemsPerPage: number;
 }
 
-const PokemonList: React.FC<PokemonListProps> = ({ pokemons, handleDeleteClick, handleDetailsClick, handleUpdateClick, selectedDetail, updatingPokemon }) => {
+const PokemonList: React.FC<PokemonListProps> = ({ pokemons, handleDeleteClick, handleDetailsClick, handleUpdateClick, selectedDetail, updatingPokemon, currentPage, itemsPerPage }) => {
   return (
     <div>
-      {pokemons.map((pokemon) => (
-        <div key={pokemon.id} style={{ marginBottom:'10px', display: 'flex', alignItems: 'center' }}>
-          <button onClick={() => handleDeleteClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Удалить</button>
-          <h2 style={{ marginRight: '10px' }}>{pokemon.name}</h2>
-          <button onClick={() => handleDetailsClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Детали</button>
-          {selectedDetail && selectedDetail.id === pokemon.id && 
-            (<div>{`ID: ${selectedDetail.id}, Опыт: ${selectedDetail.experience}, Высота: ${selectedDetail.height}, Вес: ${selectedDetail.weight}`}</div>)
-          }
-          <button onClick={() => handleUpdateClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Обновить</button>
-          {updatingPokemon && updatingPokemon.id === pokemon.id && (
-            <div>
-              {/* Здесь будет форма обновления */}
-            </div>
-          )}
-        </div>
-      ))}
+      {pokemons
+        .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+        .map((pokemon) => (
+          <div key={pokemon.id} style={{ marginBottom:'10px', display: 'flex', alignItems: 'center' }}>
+            <button onClick={() => handleDeleteClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Удалить</button>
+            <h2 style={{ marginRight: '10px' }}>{pokemon.name}</h2>
+            <button onClick={() => handleDetailsClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Детали</button>
+            {selectedDetail && selectedDetail.id === pokemon.id && 
+              (<div>{`ID: ${selectedDetail.id}, Опыт: ${selectedDetail.experience}, Высота: ${selectedDetail.height}, Вес: ${selectedDetail.weight}`}</div>)
+            }
+            <button onClick={() => handleUpdateClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Обновить</button>
+            {updatingPokemon && updatingPokemon.id === pokemon.id && (
+              <div>
+                {/* Здесь будет форма обновления */}
+              </div>
+            )}
+          </div>
+        ))}
     </div>
   );
 };
