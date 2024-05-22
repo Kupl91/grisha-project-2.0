@@ -18,7 +18,13 @@ const PokemonsPage = () => {
     handleSubmitClick,
     handleUpdateSubmit,
     handleSortChange,
-    sortedAndFilteredPokemons, // Destructure sortedAndFilteredPokemons here
+    handleFilterTypeChange,
+    handleFilterValueChange,
+    sortedAndFilteredPokemons,
+    handleUpdateInputChange,
+    handleInputChange,
+    showForm, 
+    handleCreateClick, 
   } = usePokemonActions();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,12 +44,16 @@ const PokemonsPage = () => {
 
   return (
     <div>
-      <FilterAndSort handleSortChange={handleSortChange} />
+      <FilterAndSort 
+        handleSortChange={handleSortChange} 
+        handleFilterTypeChange={handleFilterTypeChange}
+        handleFilterValueChange={handleFilterValueChange}
+      />
       <PokemonList
-        pokemons={sortedAndFilteredPokemons} // Now sortedAndFilteredPokemons is defined
+        pokemons={sortedAndFilteredPokemons}
         handleDeleteClick={handleDeleteClick}
         handleDetailsClick={handleDetailsClick}
-        handleUpdateClick={handleUpdateSubmit}
+        handleUpdateInputChange={handleUpdateInputChange}
         selectedDetail={selectedDetail}
         updatingPokemon={updatingPokemon}
         currentPage={currentPage}
@@ -56,13 +66,11 @@ const PokemonsPage = () => {
         previousPage={previousPage}
       />
       <PokemonForm
-        handleSubmitClick={handleSubmitClick}
-        handleInputChange={(event) => setNewPokemon({
-          ...newPokemon,
-          [event.target.name]: event.target.value,
-        })}
-        newPokemon={newPokemon}
-      />
+       handleSubmitClick={handleSubmitClick}
+       handleInputChange={handleInputChange}
+       handleCreateClick={handleCreateClick}
+       newPokemon={newPokemon}
+/>
     </div>
   );
 };

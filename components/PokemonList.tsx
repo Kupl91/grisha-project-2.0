@@ -17,13 +17,14 @@ interface PokemonListProps {
   handleDeleteClick: (id: number) => void;
   handleDetailsClick: (id: number) => void;
   handleUpdateClick: (id: number) => void;
+  handleUpdateInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   selectedDetail: Pokemon | null;
   updatingPokemon: Pokemon | null;
   currentPage: number;
   itemsPerPage: number;
 }
 
-const PokemonList: React.FC<PokemonListProps> = ({ pokemons, handleDeleteClick, handleDetailsClick, handleUpdateClick, selectedDetail, updatingPokemon, currentPage, itemsPerPage }) => {
+const PokemonList: React.FC<PokemonListProps> = ({ pokemons, handleDeleteClick, handleDetailsClick, handleUpdateClick, handleUpdateInputChange, selectedDetail, updatingPokemon, currentPage, itemsPerPage }) => {
   return (
     <div>
       {pokemons
@@ -39,7 +40,12 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, handleDeleteClick, 
             <button onClick={() => handleUpdateClick(pokemon.id)} style={{ marginRight: '10px', padding: '5px 10px', backgroundColor: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}>Обновить</button>
             {updatingPokemon && updatingPokemon.id === pokemon.id && (
               <div>
-                {/* Здесь будет форма обновления */}
+                <input type="text" name="name" value={updatingPokemon.name} onChange={handleUpdateInputChange} placeholder="Имя" />
+                <input type="number" name="weight" value={updatingPokemon.weight} onChange={handleUpdateInputChange} placeholder="Вес" />
+                <input type="number" name="height" value={updatingPokemon.height} onChange={handleUpdateInputChange} placeholder="Высота" />
+                <input type="text" name="species" value={updatingPokemon.species} onChange={handleUpdateInputChange} placeholder="Вид" />
+                <input type="number" name="experience" value={updatingPokemon.experience} onChange={handleUpdateInputChange} placeholder="Опыт" />
+                <button onClick={handleUpdateSubmit}>Отправить</button>
               </div>
             )}
           </div>

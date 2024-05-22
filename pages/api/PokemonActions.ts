@@ -15,6 +15,7 @@ export const usePokemonActions = () => {
   const [updatingPokemon, setUpdatingPokemon] = useState(null);
   const [filterType, setFilterType] = useState('name');
   const [filterValue, setFilterValue] = useState('');
+  const [showForm, setShowForm] = useState(false);
 
   const handleSortChange = (event) => {
     setSortType(event.target.value);
@@ -137,6 +138,17 @@ export const usePokemonActions = () => {
     }
   };
 
+  const handleUpdateInputChange = (event) => {
+    setUpdatingPokemon({
+      ...updatingPokemon,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleCreateClick = () => {
+    setShowForm(true);
+  };
+
   return {
     pokemons,
     selectedDetail,
@@ -151,5 +163,8 @@ export const usePokemonActions = () => {
     handleFilterTypeChange,
     handleFilterValueChange,
     sortedAndFilteredPokemons,
+    handleUpdateInputChange,
+    showForm, 
+    handleCreateClick, 
   };
 };
