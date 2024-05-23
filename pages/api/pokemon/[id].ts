@@ -1,4 +1,4 @@
-// Grisha-project-2.0\pages\api\pokemon\[id].ts
+// C:\Users\Pavel\Documents\GitHub\grisha-project-2.0\src\app\api\pokemon\[id].ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 

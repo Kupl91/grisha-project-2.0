@@ -1,4 +1,4 @@
-// grisha-project-2.0\pages\api\pokemons.ts
+//C:\Users\Pavel\Documents\GitHub\grisha-project-2.0\pages\api\pokemons.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 
@@ -30,6 +30,7 @@ export default async function handler(
       id: 'asc'
     }
   });
+  console.log("cerf")
 
   res.status(200).json(pokemons);
 }

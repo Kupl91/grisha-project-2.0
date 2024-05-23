@@ -1,10 +1,11 @@
-// C:\Users\pavel.kuplensky\js\grisha-project\pages\pokemons.tsx
+// C:\Users\Pavel\Documents\GitHub\grisha-project-2.0\src\app\pokemons\page.tsx
+"use client"
 import React, { useEffect, useState } from 'react';
-import FilterAndSort from '../components/FilterAndSort';
-import Pagination from '../components/Pagination';
-import PokemonList from '../components/PokemonList';
-import PokemonForm from '../components/PokemonForm';
-import { usePokemonActions } from './api/PokemonActions';
+import FilterAndSort from '@/components/FilterAndSort';
+import Pagination from '@/components/Pagination';
+import PokemonList from '@/components/PokemonList';
+import PokemonForm from '@/components/PokemonForm';
+import { usePokemonActions } from '../../../pages/api/PokemonActions';
 
 const PokemonsPage = () => {
   const {
