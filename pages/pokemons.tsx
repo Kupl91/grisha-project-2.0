@@ -25,23 +25,13 @@ const PokemonsPage = () => {
     handleUpdateInputChange,
     handleInputChange,
     showForm, 
-    handleCreateClick, 
+    handleCreateClick,
+    currentPage,
+    itemsPerPage,
+    previousPage,
+    nextPage, 
   } = usePokemonActions();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
-  useEffect(() => {
-    fetchPokemons();
-  }, []);
-
-  const nextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const previousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
 
   return (
     <div>

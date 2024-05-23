@@ -17,6 +17,20 @@ export const usePokemonActions = () => {
   const [filterValue, setFilterValue] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [updateFormOpen, setUpdateFormOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  useEffect(() => {
+    fetchPokemons();
+  }, []);
+
+  const nextPage = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const previousPage = () => {
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+  };
 
   const handleSortChange = (event) => {
     setSortType(event.target.value);
@@ -54,6 +68,12 @@ export const usePokemonActions = () => {
   };
 
   const handleDetailsClick = async (id) => {
+    if (selectedDetail && selectedDetail.id === id) {
+      // Если уже открыты детали этого покемона, скрываем их
+      setSelectedDetail(null);
+      return;
+    }
+  
     try {
       const response = await fetch(`/api/pokemon/${id}`);
       if (!response.ok) {
@@ -67,7 +87,7 @@ export const usePokemonActions = () => {
         weight: pokemonData.weight
       });
     } catch (error) {
-      console.error("Ошибка при загрузке данных:", error);   
+       console.error("Ошибка при загрузке данных:", error); 
     }
   };
 
@@ -154,8 +174,8 @@ export const usePokemonActions = () => {
   };
 
   const handleCreateClick = () => {
-    console.log('Кнопка "Создать" была нажата');
-    setShowForm(true);
+    // Если форма уже показана, скрываем её
+    setShowForm((prevShowForm) => !prevShowForm);
   };
 
   const handleInputChange = (event) => {
@@ -198,5 +218,9 @@ export const usePokemonActions = () => {
     handleCreateClick,
     handleInputChange,
     handleUpdateClick,
+    currentPage,
+    itemsPerPage,
+    previousPage,
+    nextPage,
   };
 };
